@@ -2,12 +2,11 @@
 #include <string>
 #include <cctype>
 #include <vector>
-#include <algorithm>
 
 
 using namespace std;
 
-
+// isalnum() : checks if a string is alphanumeric or not.
 bool isalnum(std :: string str) {
     for (int i = 0; i < str.length(); i++) {
         if (!(isalpha(str[i])) || !(isdigit(str[i]))) {
@@ -17,6 +16,7 @@ bool isalnum(std :: string str) {
     return true;
 }
 
+// findElement() : returns true if element is found in the vector else flase
 bool findElement(vector<int> vect, int elt) {
     for (int i = 0; i < vect.size(); i++) {
         if (vect[i] == elt) {
@@ -26,6 +26,8 @@ bool findElement(vector<int> vect, int elt) {
     return false;
 }
 
+
+// removeDuplicates() : removes any duplicate element in the vector
 vector<int> removeDuplicates(vector<int> orig) {
     vector<int> updatedvector;
     for (int i = 0; i < orig.size(); i++) {
@@ -36,7 +38,7 @@ vector<int> removeDuplicates(vector<int> orig) {
     return updatedvector;
 }
 
-
+// class TextCrypt : this class consists of all the basic functions and variables
 class TextCrypt {
 
 protected:
@@ -289,6 +291,8 @@ int main(void) {
     std :: cout << std :: endl << std :: endl;
 
     
+     
+
     int choice = 0;
     char ch = 'a';
     do {
@@ -308,24 +312,32 @@ int main(void) {
                 std :: getline(cin >> ws, text);
                 
                 en.setText(text);
+                if (text.length() <= 20) {
+                    ch = 'a';
+                }
+                else {
+                    std :: cout << "\t\t\ta. Normal Encryption" << std :: endl;
+                    std :: cout << "\t\t\tb. Advanced Encryption (Decryption part in develeopment)" << std :: endl;
+                    std :: cout << "\n\t\t\tEnter Your Choice: ";
+                    std :: cin >> ch;
+                }
                 
-                std :: cout << "\t\t\ta. Normal Encryption" << std :: endl;
-                std :: cout << "\t\t\tb. Advanced Encryption" << std :: endl;
-                std :: cout << "\n\t\t\tEnter Your Choice: ";
-                std :: cin >> ch;
-
                 switch(ch){
-                    if (text.length() <= 20) {
-                        ch = 'a';
-                    }
+                    
                     case 'a':
-                        while (true) {
-                            std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
-                            std :: cin >> pubkey;
-                            if (isalnum(pubkey) && pubkey.length() <= 10) {
-                                break;
-                            }
-                        }
+                        std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                        std :: cin >> pubkey;
+                        // while (true) {
+                            // std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                            // std :: cin >> pubkey;
+                        //     if (isalnum(pubkey) && (pubkey.length() <= 10)) {
+                        //         break;
+                        //     }
+                        // }
+                        // do {
+                        //     std :: cout << "\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                        //     std :: cin >> pubkey;
+                        // } while (!(isalnum(pubkey)) || (pubkey.length() > 10));
                         encryptedText = en.normalEncryption(text, pubkey);
                         std :: cout << std :: endl << std :: endl;
                         std :: cout << "\t" << encryptedText << "\n\n";
@@ -339,18 +351,19 @@ int main(void) {
                         cls();
                         break;
                     case 'b':
-                        while (true) {
-                            std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
-                            std :: cin >> pubkey;
-                            if (isalnum(pubkey) && pubkey.length() <= 10) {
-                                break;
-                            }
-                        }
+                        std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                        std :: cin >> pubkey;
+                        // while (true) {
+                        //     std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                        //     std :: cin >> pubkey;
+                        //     if (isalnum(pubkey) && pubkey.length() <= 10) {
+                        //         break;
+                        //     }
+                        // }
                         encryptedText = en.advEncryption(text, pubkey);
                         std :: cout << std :: endl << std :: endl;
                         std :: cout << "\t" << encryptedText << "\n\n";
 
-                        // body
                         std :: cout << "\t\t\tpasskey " << en.advavncedKeySetGetter() << "\n\n";
 
 
@@ -370,29 +383,19 @@ int main(void) {
                 break;
             case 2:
                 std :: cout << "\t\tEnter text : ";
-                std :: cin >> text;
+                std :: getline(cin >> ws, text);
                 std :: cout << "\t\t\ta. Normal Decryption" << std :: endl;
-                std :: cout << "\t\t\tb. Advanced Decryption" << std :: endl;
+                std :: cout << "\t\t\tb. Advanced Decryption (currently in development)" << std :: endl;
                 std :: cout << "\n\t\t\tEnter Your Choice: ";
                 std :: cin >> ch;
-
                 switch(ch){
-                    if (text.length() <= 20) {
-                        ch = 'a';
-                    }
+                    
                     case 'a':
-                        while (true) {
-                            std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
-                            std :: cin >> pubkey;
-                            if (isalnum(pubkey) && pubkey.length() <= 10) {
-                                break;
-                            }
-                        }
+                        
+                        std :: cout << "\t\t\t\tEnter passkey(alphanumeric, max size = 10): ";
+                        std :: cin >> pubkey;
                         decryptedText = dc.normalDecryption(text, pubkey);
                         std :: cout << decryptedText << "\n\n";
-                        // body
-
-
 
                         std :: cout << "Press any key to continue: ";
                         getchar();getchar();
@@ -401,13 +404,10 @@ int main(void) {
 
                     case 'b':
                         std :: cout << "\t\t\tEnter computer generated passkey: ";
-                        std :: cin >> receivedkey;
+                        // std :: cin >> receivedkey;
+                        std :: getline(cin >> ws, receivedkey);
                         decryptedText = dc.advDecryption(text, receivedkey);
                         std :: cout << decryptedText << "\n\n";
-
-                        // body
-
-
 
                         std :: cout << "Press any key to continue: ";
                         getchar();getchar();
