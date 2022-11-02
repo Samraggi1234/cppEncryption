@@ -42,11 +42,15 @@ vector<int> removeDuplicates(vector<int> orig) {
 class TextCrypt {
 
 protected:
+    // variables to be used by the encryptor and decryptor classes
     std :: string text;
     vector<int> leftindices;
     std :: string priv_key = "", onlyalpha = "", final_key = "", final_keyset = "", leftletters = "", keypart = "", letterpart = "";
     
 public:
+    // member fuinctions of base class
+
+    // set input text to text variable
     void setText(std :: string text_in) {
         text = text_in;
     }
@@ -55,12 +59,22 @@ public:
     friend bool findElement(vector<int> vect, int elt);
     friend vector<int> removeDuplicates(vector<int> orig);
     
-    //resolution
+    // leftLetters() : inputs a int vector & a string and adds the characters of text at the indices stored in vector to var: leftletters
     void leftLetters(vector<int> leftindices, std :: string text);
 
-
+    // privKeyMaker() : makes a private key from a public key input
+    // uses the concept of rotation of ascii values
+    // if first character of the public key is letter:
+    //      set the alphabetic numeral(rot_var) value as rotation variable. eg: A = 1, b = 2, z = 26, J = 10
+    //      if character of public key is a letter
+    //          add rot_var to the alphabetic numeral value of all characters of public key 
+    //      else if it is a number
+    //          use caesar cipher : add 3 to the number of public key such that it doesn't exceed 9. eg: 7 + 3 = 10 then --> 7 + 3 = 0; 8+3 = 11 --> 1; 
+    // else if first character of public key is number:
+    //      set rot_var = to that number
+    // finally set priv_key varible to the string generated
     void privKeyMaker(std :: string pub_key) {
-        // rot pub_key first letter 1-26
+
         int rot_var = isdigit(pub_key[0]) ? pub_key[0] - 48 : (isupper(pub_key[0]) ? pub_key[0] - 64 : pub_key[0] - 96);
         // std :: string priv_key = "";
         for (int i = 0; i < pub_key.length(); i++) {
@@ -69,7 +83,7 @@ public:
                     priv_key += (pub_key[i] + rot_var <= 90) ? pub_key[i] + rot_var : 64 + (pub_key[i] + rot_var - 90);
                 }
                 else if (islower(pub_key[i])) {
-                    priv_key += (pub_key[i] + rot_var <= 90) ? pub_key[i] + rot_var : 64 + (pub_key[i] + rot_var - 90);
+                    priv_key += (pub_key[i] + rot_var <= 122) ? pub_key[i] + rot_var : 96 + (pub_key[i] + rot_var - 122);
                 }
             }
             else if (isdigit(pub_key[i])) {
@@ -79,6 +93,7 @@ public:
         // return priv_key;
     }
 
+    // onlyAlpha() : returns only alphabets from a string input
     void onlyAlpha(std :: string pub_key) {
         // std :: string alph = "";
         for (int i = 0; i < pub_key.length(); i++) {
@@ -89,6 +104,7 @@ public:
         // return alph;
     }
 
+    // indicesLeft() : stores the alphabetic numeral value of the string provided
     void indicesLeft(std :: string alph) {
         vector<int> a;
         // vector<int>::iterator it;
@@ -133,7 +149,7 @@ public:
 
 void TextCrypt :: leftLetters(vector<int> leftindices, std :: string text) {
     for (int i = 0; i < leftindices.size(); i++) {
-        leftletters += text[i];
+        leftletters += text[leftindices[i]];
     }
 }
 
