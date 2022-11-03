@@ -472,6 +472,6 @@ int main(void) {
 
 }
 
-// using namespace std; fucks things up 
+// using namespace std; messes things up 
 
 // normal enc and dec for string < 20
