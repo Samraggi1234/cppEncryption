@@ -141,6 +141,7 @@ public:
         i++;
         while (i < received_key.length()) {
             letterpart += received_key[i];
+            i++;
         }
     }
 
